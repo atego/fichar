@@ -37,7 +37,6 @@ layout: list = [
     ],
     [sg.Button(key='-BOTONACEPTAR-', button_text='ESTABLECER HORA')],
     [sg.Text(key='-TEXTO-', text='')],
-    [sg.Button('Salir')]
 ]
 
 window: sg.Window = sg.Window(
@@ -52,11 +51,8 @@ window: sg.Window = sg.Window(
 
 def validar_hora_minuto(hora_minuto: str, key: str, maximo: int) -> None:
     if len(hora_minuto) > 0:
-        if hora_minuto[-1].isdigit() and int(hora_minuto) <= maximo:
-            return
-        else:
+        if not hora_minuto[-1].isdigit() or int(hora_minuto) > maximo:
             window[key].update(hora_minuto[:-1])
-            return
 
 
 while True:
@@ -69,7 +65,7 @@ while True:
         fecha_elegida: tuple = sg.popup_get_date(
             day_font='Monaco 14', start_day=1,
             mon_year_font='Monaco 14', begin_at_sunday_plus=True, arrow_font='Monaco 14',
-            no_titlebar=False, modal=True, close_when_chosen=True
+            no_titlebar=False, modal=True, close_when_chosen=True, title='Elige fecha'
         )
         window['-FechaTexto-'].update(value=fecha_texto(fecha_tupla=fecha_elegida))
 
