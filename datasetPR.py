@@ -1,4 +1,10 @@
 import dataset
+import datetime
+
+
+fecha: datetime = datetime.date.today()
+print(type(fecha))
+print(fecha)
 
 nombres_meses: list = [
     'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
@@ -9,7 +15,7 @@ mes = 'julio'
 
 db = dataset.connect('sqlite:///dias_fichados.db')
 tabla_agosto = db[mes]
-# tabla_agosto.insert({'nombre': 'Juanjo', 'edad': 61, 'profesion': 'Taxista'})
+# tabla_agosto.insert({'nombre': 'Marga', 'edad': 56, 'profesion': 'Seguros', 'fecha': fecha})
 
 print(db.tables)
 
@@ -23,8 +29,11 @@ print(db.tables)
 #     )
 # print(datos[0][0])
 
-for nombre in tabla_agosto:
-    print(nombre['nombre'])
-
-m = tabla_agosto.find_one(nombre='Ilde')
-print(m['nombre'], m['edad'])
+# for nombre in tabla_agosto:
+#     print(nombre['nombre'])
+#
+# m = tabla_agosto.find_one(nombre='Ilde')
+# print(m['nombre'], m['edad'])
+print(fecha.month)
+for r in tabla_agosto.find(fecha={'==': fecha}):
+    print(r['nombre'])
